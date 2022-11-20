@@ -1,16 +1,25 @@
+import { lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { Layout } from './Layout/Layout';
+
+const Home = lazy(() => import('../pages/Home/Home'));
+const FilmCast = lazy(() => import('../components/FilmCast/FilmCast'));
+const FilmRewiev = lazy(() => import('./FilmRewiev/FilmReview'));
+const MovieItem = lazy(() => import('../pages/MovieItem/MovieItem'));
+
 export const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="movies" element={<div>Movies</div>} />
+          <Route path="movies/:movieId" element={<MovieItem />}>
+            <Route path="cast" element={<FilmCast />} />
+            <Route path="reviews" element={<FilmRewiev />} />
+          </Route>
+        </Route>
+      </Routes>
+    </>
   );
 };
